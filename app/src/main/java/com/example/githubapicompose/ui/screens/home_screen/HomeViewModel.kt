@@ -1,4 +1,4 @@
-package com.example.githubapicompose.ui.screens
+package com.example.githubapicompose.ui.screens.home_screen
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

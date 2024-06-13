@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Git Hub Api Compose</string>
+    <string name="loading_failed">Loading failed</string>
 </resources>
