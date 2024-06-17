@@ -52,6 +52,9 @@ android {
 
 dependencies {
 
+    //navigation
+    implementation (libs.androidx.navigation.compose)
+
     // Retrofit
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.retrofit)

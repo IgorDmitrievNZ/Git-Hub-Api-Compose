@@ -18,15 +18,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.githubapicompose.R
+import com.example.githubapicompose.Screen
 import com.example.githubapicompose.model.UserDTO
 
 @Composable
-fun UserCard(user: UserDTO, modifier: Modifier = Modifier) {
+fun UserCard(user: UserDTO, navController: NavController) {
     val context = LocalContext.current
     Card(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .height(150.dp)
             .padding(5.dp)
@@ -34,6 +36,7 @@ fun UserCard(user: UserDTO, modifier: Modifier = Modifier) {
                 Toast
                     .makeText(context, user.login, Toast.LENGTH_SHORT)
                     .show()
+                navController.navigate(Screen.DetailsScreenRoute.withArgs(user.login))
             }
     )
     {
