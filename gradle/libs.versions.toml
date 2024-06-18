@@ -1,21 +1,21 @@
 [versions]
-agp = "8.4.0"
+agp = "8.4.2"
 coilCompose = "2.6.0"
-kotlin = "1.9.0"
+kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
-kotlinxSerializationJson = "1.6.0"
-lifecycleRuntimeKtx = "2.8.1"
+kotlinxSerializationJson = "1.7.0"
+lifecycleRuntimeKtx = "2.8.2"
 activityCompose = "1.9.0"
-composeBom = "2023.08.00"
+composeBom = "2024.06.00"
 lifecycleViewmodelCompose = "2.8.2"
 navigationCompose = "2.7.7"
 okhttp = "4.12.0"
 retrofit = "2.9.0"
 retrofit2KotlinxSerializationConverter = "1.0.0"
-serialization = "1.9.10"
+serialization = "2.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -43,5 +43,6 @@ retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
 
