@@ -22,7 +22,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.githubapicompose.R
 import com.example.githubapicompose.Screen
-import com.example.githubapicompose.model.UserDTO
+import com.example.githubapicompose.model.users_dto.UserDTO
 
 @Composable
 fun UserCard(user: UserDTO, navController: NavController) {

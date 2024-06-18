@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubapicompose.model.UserDTO
+import com.example.githubapicompose.model.users_dto.UserDTO
 import com.example.githubapicompose.network.UsersApi
 import kotlinx.coroutines.launch
 import retrofit2.HttpException

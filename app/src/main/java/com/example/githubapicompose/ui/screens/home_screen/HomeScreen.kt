@@ -1,16 +1,23 @@
 package com.example.githubapicompose.ui.screens.home_screen
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.githubapicompose.ui.screens.error_screen.ErrorScreen
 import com.example.githubapicompose.ui.screens.loading_screen.LoadingScreen
 
 @Composable
-fun HomeScreen(homeUiState: HomeUiState, navController: NavController) {
+fun HomeScreen(navController: NavController) {
 
-    when (homeUiState) {
+    val homeViewModel = viewModel<HomeViewModel>()
+
+    when (homeViewModel.homeUiState) {
         is HomeUiState.Loading -> LoadingScreen()
-        is HomeUiState.Success -> UsersList(homeUiState.users, navController)
+        is HomeUiState.Success -> UsersList(
+            (homeViewModel.homeUiState as HomeUiState.Success).users,
+            navController
+        )
+
         is HomeUiState.Error -> ErrorScreen()
     }
 }
