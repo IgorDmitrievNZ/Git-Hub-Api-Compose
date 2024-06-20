@@ -44,12 +44,17 @@ fun SearchView(navController: NavController) {
         placeholder = { Text(text = stringResource(id = R.string.enter_user_login)) },
         windowInsets = WindowInsets(top = 0.dp),
         leadingIcon = {
-            Icon(modifier = Modifier
-                .clickable {
-                    Toast.makeText(context, text, Toast.LENGTH_SHORT)
-                        .show()
-                    navController.navigate(Screen.DetailsScreenRoute.withArgs(text))
-                }, imageVector = Icons.Default.Search, contentDescription = null)
+            Icon(
+                modifier = Modifier
+                    .clickable {
+                        if (text.isNotEmpty()) {
+                            navController.navigate(Screen.DetailsScreenRoute.withArgs(text))
+                        }else{
+                            Toast.makeText(context, "Please enter user name or login", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }, imageVector = Icons.Default.Search, contentDescription = null
+            )
         },
 
         trailingIcon = {
