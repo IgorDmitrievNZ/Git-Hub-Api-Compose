@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Git Hub Api Compose</string>
     <string name="loading_failed">Loading failed</string>
+    <string name="enter_user_login">Enter user login</string>
 </resources>
