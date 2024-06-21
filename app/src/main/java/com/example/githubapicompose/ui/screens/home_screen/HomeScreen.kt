@@ -16,13 +16,13 @@ fun HomeScreen(navController: NavController) {
         SearchView(navController)
 
         when (homeViewModel.homeUiState) {
-            is HomeUiState.Loading -> LoadingScreen()
-            is HomeUiState.Success -> UsersList(
-                (homeViewModel.homeUiState as HomeUiState.Success).users,
+            is HomeViewModel.HomeUiState.Loading -> LoadingScreen()
+            is HomeViewModel.HomeUiState.Success -> UsersList(
+                (homeViewModel.homeUiState as HomeViewModel.HomeUiState.Success).users,
                 navController
             )
 
-            is HomeUiState.Error -> ErrorScreen()
+            is HomeViewModel.HomeUiState.Error -> ErrorScreen()
         }
     }
 }

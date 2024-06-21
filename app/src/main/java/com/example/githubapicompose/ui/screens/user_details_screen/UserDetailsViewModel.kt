@@ -7,7 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.githubapicompose.model.user_details_dto.UserDetailsDTO
-import com.example.githubapicompose.network.DetailsApi
+import com.example.githubapicompose.network.ApiClient
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -25,7 +25,7 @@ class UserDetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         viewModelScope.launch {
             detailUiState = DetailUiState.Loading
             detailUiState = try {
-                val listResult = DetailsApi.retrofitService.getUserDetails(login)
+                val listResult = ApiClient.retrofitService.getUserDetails(login)
                 DetailUiState.Success(listResult)
             } catch (e: IOException) {
                 DetailUiState.Error

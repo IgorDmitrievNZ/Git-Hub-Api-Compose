@@ -22,13 +22,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.githubapicompose.R
 import com.example.githubapicompose.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchView(navController: NavController) {
+fun SearchView( navController: NavController) {
+    val homeViewModel = viewModel<HomeViewModel>()
     val context = LocalContext.current
     var text by remember { mutableStateOf("") } // Query for SearchBar
     var isActive by remember { mutableStateOf(false) } // Active state for SearchBar
@@ -48,9 +50,14 @@ fun SearchView(navController: NavController) {
                 modifier = Modifier
                     .clickable {
                         if (text.isNotEmpty()) {
+                            homeViewModel.searchResult = text
                             navController.navigate(Screen.DetailsScreenRoute.withArgs(text))
-                        }else{
-                            Toast.makeText(context, "Please enter user name or login", Toast.LENGTH_SHORT)
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Please enter user name or login",
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                         }
                     }, imageVector = Icons.Default.Search, contentDescription = null
@@ -72,13 +79,13 @@ fun SearchView(navController: NavController) {
             }
         }
     ) {
-        UserListItem(userLogin = text)
+        UserListItem(enteredText = text)
     }
 }
 
 @Composable
-fun UserListItem(userLogin: String) {
+fun UserListItem(enteredText: String) {
     Column(modifier = Modifier.padding(10.dp)) {
-        Text(text = userLogin)
+        Text(text = enteredText)
     }
 }
