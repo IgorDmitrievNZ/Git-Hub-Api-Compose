@@ -20,6 +20,7 @@ data class Item(
     val score: Double?,
     val site_admin: Boolean?,
     val starred_url: String?,
+    val subscriptions_url: String?,
     val type: String?,
     val url: String?
 )
