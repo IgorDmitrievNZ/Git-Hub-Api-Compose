@@ -31,8 +31,8 @@ import com.example.githubapicompose.R
 fun SearchView(navController: NavController) {
     val viewModel = viewModel<SearchViewModel>()
     val context = LocalContext.current
-    var text by remember { mutableStateOf("") } // Query for SearchBar
-    var isActive by remember { mutableStateOf(true) } // Active state for SearchBar
+    var text by remember { mutableStateOf(viewModel.searchText) } // Query for SearchBar
+    var isActive by remember { mutableStateOf(false) } // Active state for SearchBar
 
     Column {
 
