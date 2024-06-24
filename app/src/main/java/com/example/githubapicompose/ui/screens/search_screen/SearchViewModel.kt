@@ -15,13 +15,13 @@ import java.io.IOException
 class SearchViewModel() : ViewModel() {
     var searchUiState: SearchUiState by mutableStateOf(SearchUiState.Loading)
         private set
-    var searchText by mutableStateOf("igor")
+    var searchText by mutableStateOf("")
 
     init {
         getSearch(searchText)
     }
 
-    private fun getSearch(search: String) {
+    fun getSearch(search: String) {
         viewModelScope.launch {
             searchUiState = SearchUiState.Loading
             searchUiState = try {

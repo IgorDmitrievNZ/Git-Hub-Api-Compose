@@ -31,13 +31,14 @@ fun SearchView() {
     val viewModel = viewModel<SearchViewModel>()
     val context = LocalContext.current
     var text by remember { mutableStateOf("") } // Query for SearchBar
-    var isActive by remember { mutableStateOf(false) } // Active state for SearchBar
+    var isActive by remember { mutableStateOf(true) } // Active state for SearchBar
 
     Column {
 
-        SearchBar(modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
+        SearchBar(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
             query = text,
             onQueryChange = { text = it },
             onSearch = { isActive = true },
@@ -50,14 +51,15 @@ fun SearchView() {
                     modifier = Modifier
                         .clickable {
                             if (text.isNotEmpty()) {
-//                            viewModel.searchText = text
+                                viewModel.searchText = text
+                                viewModel.getSearch(viewModel.searchText)
+                                isActive = false
                             } else {
                                 Toast.makeText(
                                     context,
-                                    "Please enter user name or login",
+                                    R.string.please_enter_text_in_field,
                                     Toast.LENGTH_SHORT
-                                )
-                                    .show()
+                                ).show()
                             }
                         }, imageVector = Icons.Default.Search, contentDescription = null
                 )
@@ -69,6 +71,7 @@ fun SearchView() {
                         modifier = Modifier.clickable {
                             if (text.isNotEmpty()) {
                                 text = ""
+                                viewModel.searchText = ""
                             } else {
                                 isActive = false
                             }
@@ -80,7 +83,9 @@ fun SearchView() {
         ) {
             UserListItem(enteredText = text)
         }
-        SearchScreen()//result
+        if (viewModel.searchText.isNotEmpty()) {
+            SearchScreen()//result
+        }
     }
 
 }
