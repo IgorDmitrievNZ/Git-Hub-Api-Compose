@@ -21,14 +21,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.githubapicompose.R
+import com.example.githubapicompose.Screen
 import com.example.githubapicompose.model.search_dto.Item
 import com.example.githubapicompose.ui.screens.error_screen.ErrorScreen
 import com.example.githubapicompose.ui.screens.loading_screen.LoadingScreen
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(navController: NavController) {
     val viewModel = viewModel<SearchViewModel>()
 
     when (viewModel.searchUiState) {
@@ -36,7 +38,7 @@ fun SearchScreen() {
         is SearchViewModel.SearchUiState.Success -> (viewModel.searchUiState as SearchViewModel.SearchUiState.Success)
             .searchDto.items?.let {
                 SearchList(
-                    it,
+                    it, navController
                 )
             }
 
@@ -45,16 +47,16 @@ fun SearchScreen() {
 }
 
 @Composable
-fun SearchList(searchList: List<Item>) {
+fun SearchList(searchList: List<Item>, navController: NavController) {
     LazyColumn {
         items(searchList) { item ->
-            SearchCardContent(dto = item)
+            SearchCardContent(dto = item, navController)
         }
     }
 }
 
 @Composable
-fun SearchCardContent(dto: Item) {
+fun SearchCardContent(dto: Item, navController: NavController) {
     val context = LocalContext.current
     Card(
         modifier = Modifier
@@ -65,7 +67,9 @@ fun SearchCardContent(dto: Item) {
                 Toast
                     .makeText(context, dto.login, Toast.LENGTH_SHORT)
                     .show()
+                navController.navigate(Screen.DetailsScreenRoute.withArgs(dto.login))
             }
+
     )
     {
         //card content bellow

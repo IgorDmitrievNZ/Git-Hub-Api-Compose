@@ -23,11 +23,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.githubapicompose.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchView() {
+fun SearchView(navController: NavController) {
     val viewModel = viewModel<SearchViewModel>()
     val context = LocalContext.current
     var text by remember { mutableStateOf("") } // Query for SearchBar
@@ -84,7 +85,7 @@ fun SearchView() {
             UserListItem(enteredText = text)
         }
         if (viewModel.searchText.isNotEmpty()) {
-            SearchScreen()//result
+            SearchScreen(navController)//result
         }
     }
 

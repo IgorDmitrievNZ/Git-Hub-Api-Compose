@@ -37,7 +37,7 @@ fun Navigation() {
         composable(
             Screen.SearchScreenRoute.route
         ) {
-            SearchView()
+            SearchView(navController)
         }
 
         //next route here
