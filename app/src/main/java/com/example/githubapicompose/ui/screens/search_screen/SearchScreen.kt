@@ -75,7 +75,7 @@ fun SearchCardContent(dto: Item, navController: NavController) {
         //card content bellow
         Row {
             AsyncImage(
-                model = dto.avatar_url,
+                model = dto.avatarUrl,
                 placeholder = painterResource(R.drawable.ic_launcher_foreground),
                 contentDescription = null,
                 contentScale = ContentScale.Fit,

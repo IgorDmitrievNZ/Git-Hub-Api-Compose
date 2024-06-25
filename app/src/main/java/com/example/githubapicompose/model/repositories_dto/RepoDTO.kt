@@ -84,5 +84,5 @@ data class RepoDTO(
     val visibility: String?,
     val watchers: Int?,
     @SerialName("watchers_count") val watchersCount: Int?,
-    @SerialName("web_commit_signoff_required") val webCommitSignoffRequired: Boolean?
+    @SerialName("web_commit_signoff_required") val webCommitSignOffRequired: Boolean?
 )
