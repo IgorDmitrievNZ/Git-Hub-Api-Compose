@@ -43,7 +43,7 @@ fun UserCard(user: UserDTO, navController: NavController) {
         //card content bellow
         Row {
             AsyncImage(
-                model = user.avatar_url,
+                model = user.avatarUrl,
                 placeholder = painterResource(R.drawable.ic_launcher_foreground),
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
