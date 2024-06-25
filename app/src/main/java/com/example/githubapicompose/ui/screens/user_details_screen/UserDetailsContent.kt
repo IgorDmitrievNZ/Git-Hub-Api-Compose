@@ -51,7 +51,7 @@ fun UserDetailsContent(detailsDto: UserDetailsDTO, reposDTO: List<RepoDTO>) {
                 .padding(10.dp)
                 .size(300.dp)
                 .align(Alignment.CenterHorizontally),
-            model = detailsDto.avatar_url, contentDescription = "avatar"
+            model = detailsDto.avatarUrl, contentDescription = "avatar"
         )
 
         Text(
