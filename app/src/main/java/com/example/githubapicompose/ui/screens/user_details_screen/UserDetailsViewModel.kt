@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.githubapicompose.model.repositories_dto.RepoDTO
 import com.example.githubapicompose.model.user_details_dto.UserDetailsDTO
 import com.example.githubapicompose.network.ApiClient
 import kotlinx.coroutines.launch
@@ -25,8 +26,9 @@ class UserDetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         viewModelScope.launch {
             detailUiState = DetailUiState.Loading
             detailUiState = try {
-                val listResult = ApiClient.retrofitService.getUserDetails(login)
-                DetailUiState.Success(listResult)
+                val detailsResult = ApiClient.retrofitService.getUserDetails(login)
+                val reposResult = ApiClient.retrofitService.getRepos(login)
+                DetailUiState.Success(detailsResult, reposResult)
             } catch (e: IOException) {
                 DetailUiState.Error
             } catch (e: HttpException) {
@@ -34,10 +36,12 @@ class UserDetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
             }
         }
     }
-}
 
-sealed interface DetailUiState {
-    data class Success(val userDetail: UserDetailsDTO) : DetailUiState
-    data object Error : DetailUiState
-    data object Loading : DetailUiState
+    sealed interface DetailUiState {
+        data class Success(val userDetail: UserDetailsDTO, val userRepos: List<RepoDTO>) :
+            DetailUiState
+
+        data object Error : DetailUiState
+        data object Loading : DetailUiState
+    }
 }

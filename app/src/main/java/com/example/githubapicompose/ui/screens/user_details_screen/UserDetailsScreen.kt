@@ -8,9 +8,16 @@ import com.example.githubapicompose.ui.screens.loading_screen.LoadingScreen
 @Composable
 fun UserDetailsScreen() {
     val detailsViewModel = viewModel<UserDetailsViewModel>()
+
     when (detailsViewModel.detailUiState) {
-        is DetailUiState.Loading -> LoadingScreen()
-        is DetailUiState.Success -> UserDetailsContent((detailsViewModel.detailUiState as DetailUiState.Success).userDetail)
-        is DetailUiState.Error -> ErrorScreen()
+
+        is UserDetailsViewModel.DetailUiState.Loading -> LoadingScreen()
+
+        is UserDetailsViewModel.DetailUiState.Success -> UserDetailsContent(
+            (detailsViewModel.detailUiState as UserDetailsViewModel.DetailUiState.Success).userDetail,
+            (detailsViewModel.detailUiState as UserDetailsViewModel.DetailUiState.Success).userRepos
+        )
+
+        is UserDetailsViewModel.DetailUiState.Error -> ErrorScreen()
     }
 }

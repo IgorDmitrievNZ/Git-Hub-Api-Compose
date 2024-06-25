@@ -1,5 +1,6 @@
 package com.example.githubapicompose.network
 
+import com.example.githubapicompose.model.repositories_dto.RepoDTO
 import com.example.githubapicompose.model.search_dto.SearchDTO
 import com.example.githubapicompose.model.user_details_dto.UserDetailsDTO
 import com.example.githubapicompose.model.users_dto.UserDTO
@@ -23,5 +24,10 @@ interface GitHubApiService {
     suspend fun getSearchResult(
         @Query("q") q: String
     ): SearchDTO
+
+    @GET("users/{userLogin}/repos")
+    suspend fun getRepos(
+        @Path("userLogin") userLogin: String
+    ): List<RepoDTO>
 
 }
