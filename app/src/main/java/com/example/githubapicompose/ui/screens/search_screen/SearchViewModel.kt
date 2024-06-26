@@ -8,11 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.githubapicompose.model.search_dto.SearchDTO
 import com.example.githubapicompose.network.ApiClient
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class SearchViewModel() : ViewModel() {
+@HiltViewModel
+class SearchViewModel @Inject constructor() : ViewModel() {
     var searchUiState: SearchUiState by mutableStateOf(SearchUiState.Loading)
         private set
     var searchText by mutableStateOf("")

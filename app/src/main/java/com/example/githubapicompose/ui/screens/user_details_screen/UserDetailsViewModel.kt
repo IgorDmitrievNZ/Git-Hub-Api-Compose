@@ -9,11 +9,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.githubapicompose.model.repositories_dto.RepoDTO
 import com.example.githubapicompose.model.user_details_dto.UserDetailsDTO
 import com.example.githubapicompose.network.ApiClient
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class UserDetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
+@HiltViewModel
+class UserDetailsViewModel @Inject constructor(savedStateHandle: SavedStateHandle) : ViewModel() {
     var detailUiState: DetailUiState by mutableStateOf(DetailUiState.Loading)
         private set
     private val loginUser: String = checkNotNull(savedStateHandle["login"])
