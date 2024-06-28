@@ -2,98 +2,99 @@ package com.example.githubapicompose.ui.screens.search_screen
 
 import android.widget.Toast
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
 import com.example.githubapicompose.R
-import com.example.githubapicompose.Screen
-import com.example.githubapicompose.model.search_dto.Item
-import com.example.githubapicompose.ui.screens.error_screen.ErrorScreen
-import com.example.githubapicompose.ui.screens.loading_screen.LoadingScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(navController: NavController) {
-    val viewModel = viewModel<SearchViewModel>()
 
-    when (viewModel.searchUiState) {
-        is SearchViewModel.SearchUiState.Loading -> LoadingScreen()
-        is SearchViewModel.SearchUiState.Success -> (viewModel.searchUiState as SearchViewModel.SearchUiState.Success)
-            .searchDto.items?.let {
-                SearchList(
-                    it, navController
-                )
-            }
-
-        is SearchViewModel.SearchUiState.Error -> ErrorScreen()
-    }
-}
-
-@Composable
-fun SearchList(searchList: List<Item>, navController: NavController) {
-    LazyColumn {
-        items(searchList) { item ->
-            SearchCardContent(dto = item, navController)
-        }
-    }
-}
-
-@Composable
-fun SearchCardContent(dto: Item, navController: NavController) {
+    val viewModel = hiltViewModel<SearchViewModel>()
     val context = LocalContext.current
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(150.dp)
-            .padding(5.dp)
-            .clickable {
-                Toast
-                    .makeText(context, dto.login, Toast.LENGTH_SHORT)
-                    .show()
-                navController.navigate(Screen.DetailsScreenRoute.withArgs(dto.login))
-            }
+    var text by remember { mutableStateOf(viewModel.searchText) } // Query for SearchBar
+    var isActive by remember { mutableStateOf(false) } // Active state for SearchBar
 
-    )
-    {
-        //card content bellow
-        Row {
-            AsyncImage(
-                model = dto.avatarUrl,
-                placeholder = painterResource(R.drawable.ic_launcher_foreground),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .fillMaxWidth(0.4f)
-                    .fillMaxHeight()
-                    .padding(5.dp)
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                Text(
+    Column {
+
+        SearchBar(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            query = text,
+            onQueryChange = { text = it },
+            onSearch = { isActive = true },
+            active = isActive,
+            onActiveChange = { isActive = it },
+            placeholder = { Text(text = stringResource(id = R.string.enter_user_login)) },
+            windowInsets = WindowInsets(top = 0.dp),
+            leadingIcon = {
+                Icon(
                     modifier = Modifier
-                        .align(Alignment.Center),
-                    text = dto.login
+                        .clickable {
+                            if (text.isNotEmpty()) {
+                                viewModel.searchText = text
+                                viewModel.getSearch(viewModel.searchText)
+                                isActive = false
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    R.string.please_enter_text_in_field,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }, imageVector = Icons.Default.Search, contentDescription = null
                 )
-            }
+            },
+
+            trailingIcon = {
+                if (isActive) {
+                    Icon(
+                        modifier = Modifier.clickable {
+                            if (text.isNotEmpty()) {
+                                text = ""
+                                viewModel.searchText = ""
+                            } else {
+                                isActive = false
+                            }
+                        },
+                        imageVector = Icons.Default.Close, contentDescription = null
+                    )
+                }
+            },
+        ) {
+            UserListItem(enteredText = text)
         }
+        if (viewModel.searchText.isNotEmpty()) {
+            SearchResultScreen(viewModel.searchUiState, navController)//result
+        }
+    }
+
+}
+
+@Composable
+private fun UserListItem(enteredText: String) {
+    Column(modifier = Modifier.padding(10.dp)) {
+        Text(text = enteredText)
     }
 }

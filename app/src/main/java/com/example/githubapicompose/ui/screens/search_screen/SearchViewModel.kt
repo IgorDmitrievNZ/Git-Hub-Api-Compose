@@ -6,8 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.githubapicompose.model.search_dto.SearchDTO
-import com.example.githubapicompose.network.ApiClient
+import com.example.githubapicompose.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -15,7 +14,9 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor() : ViewModel() {
+class SearchViewModel @Inject constructor(
+    private val repository: Repository
+) : ViewModel() {
     var searchUiState: SearchUiState by mutableStateOf(SearchUiState.Loading)
         private set
     var searchText by mutableStateOf("")
@@ -24,11 +25,22 @@ class SearchViewModel @Inject constructor() : ViewModel() {
         getSearch(searchText)
     }
 
+    data class SearchModel(
+        val login: String,
+        val avatarUrl: String?
+    )
+
     fun getSearch(search: String) {
         viewModelScope.launch {
             searchUiState = SearchUiState.Loading
             searchUiState = try {
-                val listResult = ApiClient.retrofitService.getSearchResult(search)
+                val listResult: List<SearchModel> =
+                    repository.getSearchResultFromServer(search).items.map {
+                        SearchModel(
+                            it.login,
+                            it.avatarUrl
+                        )
+                    }
                 Log.d("My list:", listResult.toString())
                 SearchUiState.Success(listResult)
             } catch (e: IOException) {
@@ -40,7 +52,7 @@ class SearchViewModel @Inject constructor() : ViewModel() {
     }
 
     sealed interface SearchUiState {
-        data class Success(val searchDto: SearchDTO) : SearchUiState
+        data class Success(val searchDto: List<SearchModel>) : SearchUiState
         data object Error : SearchUiState
         data object Loading : SearchUiState
     }
