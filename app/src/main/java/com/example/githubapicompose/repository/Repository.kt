@@ -10,6 +10,7 @@ import javax.inject.Singleton
 
 @Singleton
 class Repository @Inject constructor() {
+
     suspend fun getUsersFromServer(): List<UserDTO> {
         return ApiClient.retrofitService.getUsers()
     }
@@ -18,8 +19,8 @@ class Repository @Inject constructor() {
         return ApiClient.retrofitService.getUserDetails(login)
     }
 
-    suspend fun getSearchResultFromServer(login: String): SearchDTO {
-        return ApiClient.retrofitService.getSearchResult(login)
+    suspend fun getSearchResultFromServer(q: String): SearchDTO {
+        return ApiClient.retrofitService.getSearchResult(q)
     }
 
     suspend fun getReposFromServer(userLogin: String): List<RepoDTO> {

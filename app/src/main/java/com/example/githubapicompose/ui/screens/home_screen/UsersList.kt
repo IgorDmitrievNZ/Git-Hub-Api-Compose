@@ -4,10 +4,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.example.githubapicompose.model.users_dto.UserDTO
 
 @Composable
-fun UsersList(users: List<UserDTO>, navController: NavController) {
+fun UsersList(users: List<HomeViewModel.UsersModel>, navController: NavController) {
     LazyColumn {
         items(users) { item ->
             UserCard(user = item, navController)

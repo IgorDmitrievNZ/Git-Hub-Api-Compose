@@ -10,7 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.githubapicompose.Screen
 import com.example.githubapicompose.ui.screens.error_screen.ErrorScreen
@@ -19,7 +19,7 @@ import com.example.githubapicompose.ui.screens.loading_screen.LoadingScreen
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    val homeViewModel = viewModel<HomeViewModel>()
+    val viewModel = hiltViewModel<HomeViewModel>()
 
     Column {
 
@@ -32,10 +32,10 @@ fun HomeScreen(navController: NavController) {
             contentDescription = null
         )
 
-        when (homeViewModel.homeUiState) {
+        when (viewModel.homeUiState) {
             is HomeViewModel.HomeUiState.Loading -> LoadingScreen()
             is HomeViewModel.HomeUiState.Success -> UsersList(
-                (homeViewModel.homeUiState as HomeViewModel.HomeUiState.Success).users,
+                ((viewModel.homeUiState as HomeViewModel.HomeUiState.Success).users),
                 navController
             )
 
