@@ -1,18 +1,17 @@
 package com.example.githubapicompose
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.githubapicompose.ui.screens.home_screen.HomeScreen
 import com.example.githubapicompose.ui.screens.search_screen.SearchScreen
 import com.example.githubapicompose.ui.screens.user_details_screen.UserDetailsScreen
 
 @Composable
-fun Navigation() {
-    val navController = rememberNavController()
+fun Navigation(navController: NavHostController) {
 
     //main screen route
     NavHost(navController = navController, startDestination = Screen.HomeScreenRoute.route) {

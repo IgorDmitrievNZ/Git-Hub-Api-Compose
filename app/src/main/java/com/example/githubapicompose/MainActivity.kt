@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import com.example.githubapicompose.ui.screens.app.BottomNavBar
 import com.example.githubapicompose.ui.theme.GitHubApiComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,11 +20,18 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             GitHubApiComposeTheme {
-                Scaffold(content = { paddingValues ->
-                    Surface(modifier = Modifier.padding(paddingValues)) {
-                        Navigation()
-                    }
-                })
+
+                val navController = rememberNavController()
+
+                Scaffold(
+                    bottomBar = { BottomNavBar(navController) },
+                    content = { paddingValues ->
+                        Surface(modifier = Modifier.padding(paddingValues)) {
+                            Navigation(
+                                navController
+                            )
+                        }
+                    })
             }
         }
     }
