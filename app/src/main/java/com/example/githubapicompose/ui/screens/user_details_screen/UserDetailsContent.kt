@@ -15,11 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.githubapicompose.model.repositories_dto.RepoDTO
-import com.example.githubapicompose.model.user_details_dto.UserDetailsDTO
 
 @Composable
-fun UserDetailsContent(detailsDto: UserDetailsDTO, reposDTO: List<RepoDTO>) {
+fun UserDetailsContent(
+    detailsDto: UserDetailsViewModel.UserDetailsModel,
+    reposDTO: List<UserDetailsViewModel.RepoModel>
+) {
 
     Column {
         Text(
