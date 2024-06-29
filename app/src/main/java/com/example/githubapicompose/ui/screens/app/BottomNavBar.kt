@@ -56,8 +56,15 @@ fun BottomNavBar(navController: NavController) {
                 onClick = {
                     selectedItemIndex = index
                     when (index) {
-                        0 -> navController.navigate(Screen.HomeScreenRoute.route)
-                        1 -> navController.navigate(Screen.SearchScreenRoute.route)
+                        0 -> navController.navigate(Screen.HomeScreenRoute.route) {
+                            popUpTo(navController.graph.startDestinationId)
+                            launchSingleTop = true
+                        }
+
+                        1 -> navController.navigate(Screen.SearchScreenRoute.route) {
+                            popUpTo(navController.graph.startDestinationId)
+                            launchSingleTop = true
+                        }
                         // todo  2 ->
                     }
                 },
