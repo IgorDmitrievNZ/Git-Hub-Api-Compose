@@ -43,7 +43,12 @@ fun SearchScreen(navController: NavController) {
                 .padding(10.dp),
             query = text,
             onQueryChange = { text = it },
-            onSearch = { isActive = true },
+            onSearch = {
+                isActive = true
+                viewModel.searchText = text
+                viewModel.getSearch(viewModel.searchText)
+                isActive = false
+            },
             active = isActive,
             onActiveChange = { isActive = it },
             placeholder = { Text(text = stringResource(id = R.string.enter_user_login)) },
